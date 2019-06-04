@@ -18,3 +18,6 @@ These modules will required to be preinstalled.
 * numpy 
 * os
 * matplotlib
+
+### Demo 
+![](video_demo.gif)
