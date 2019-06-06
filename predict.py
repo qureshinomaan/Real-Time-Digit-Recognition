@@ -37,7 +37,7 @@ def rands():
 	rand = random.randint(0,10001)
 	prediction = model.predict(test_images[rand][np.newaxis,:,:])
 	plt.grid(False)
-	print(test_images[rand])
+	#print(test_images[rand])
 	plt.imshow(test_images[rand],cmap = plt.cm.binary)
 	plt.title("Prediction : " + str(np.argmax(prediction)))
 	plt.show()
@@ -52,7 +52,7 @@ def preproc(image_data) :
 	res = (res)*100
 	res = np.around(res)
 	res[res < 20] = 0
-	print(res)
+	#print(res)
 	res = res/255
 	return res,res[np.newaxis,:,:]
 #====================================================================================#
