@@ -49,7 +49,7 @@ model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metr
 #====================================================================================#
 #Training the model 
 #====================================================================================#
-model.fit(train_images, train_labels, epochs = 10)
+model.fit(train_images, train_labels, epochs = 5)
 #epochs is how many time you see an image 
 #The images are randomly feed to the neural network because the way the images are fed to the 
 #model tweaks the weights.
