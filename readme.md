@@ -1,5 +1,8 @@
+# NOTE
+The out of sample error of this model is very high. Probably the model is overfitted to the training data. I will improve it once I get a more better understanding of how to set hyperparameters. Sorry for such low performance.
+
 # RealTime Digit Recoginition
-This program takes the input from the user using a pygame window and then predicting digit.
+This program takes the input from the user using a pygame window and then predicts the digit.
 
 ## How to use the program? 
 * Clone this repository.
