@@ -49,7 +49,7 @@ def preproc(image_data) :
 	res = cv2.cvtColor(image_data, cv2.COLOR_BGR2GRAY)
 	res = resize(res,(28,28), anti_aliasing=True)
 	res = np.rot90(np.fliplr(res))
-	res = (res)*100
+	res = (res)*250
 	res = np.around(res)
 	res[res < 20] = 0
 	#print(res)
@@ -68,6 +68,7 @@ while True :
 	prediction = model.predict(pes)
 	plt.grid(False)
 	plt.imshow(res,cmap = plt.cm.binary)
+	print(prediction)
 	plt.title("Prediction : " + str(np.argmax(prediction)))
 	plt.show()
 #====================================================================================#

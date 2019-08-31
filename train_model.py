@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras 
+from keras import optimizers
 import numpy as np
 import matplotlib.pyplot as plt 
 import os, ssl
@@ -37,11 +38,20 @@ train_images = train_images/255.0
 #====================================================================================#
 model = keras.Sequential([
 	keras.layers.Flatten(input_shape = (28,28)),
+	keras.layers.Dense(512, activation = "relu" ),
+	keras.layers.Dense(512, activation = "relu" ),
+	keras.layers.Dense(256, activation = "relu" ),
 	keras.layers.Dense(128, activation = "relu" ),
-	keras.layers.Dense(64, activation = "relu" ),
 	keras.layers.Dense(10, activation = "softmax" )
 	])
+# Insert Hyperparameters
+learning_rate = 0.1
+training_epochs = 20
+batch_size = 100
+sgd = optimizers.SGD(lr=learning_rate)
+
 model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
+
 #====================================================================================#
 
 
@@ -49,7 +59,7 @@ model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metr
 #====================================================================================#
 #Training the model 
 #====================================================================================#
-model.fit(train_images, train_labels, epochs = 5)
+model.fit(train_images, train_labels, epochs = 2, batch_size = batch_size,verbose = 2)
 #epochs is how many time you see an image 
 #The images are randomly feed to the neural network because the way the images are fed to the 
 #model tweaks the weights.
