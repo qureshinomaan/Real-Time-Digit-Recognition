@@ -51,7 +51,7 @@ training_epochs = 20
 batch_size = 100
 sgd = optimizers.SGD(lr=learning_rate)
 
-model.compile(optimizer = "SGD", loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
+model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
 
 #====================================================================================#
 
