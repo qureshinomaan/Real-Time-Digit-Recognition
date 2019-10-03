@@ -45,7 +45,7 @@ model = keras.Sequential([
 	keras.layers.Dense(10, activation = "softmax" )
 	])
 # Insert Hyperparameters
-learning_rate = 0.1
+learning_rate = 0.01
 training_epochs = 20
 batch_size = 100
 sgd = optimizers.SGD(lr=learning_rate)
@@ -59,7 +59,7 @@ model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metr
 #====================================================================================#
 #Training the model 
 #====================================================================================#
-model.fit(train_images, train_labels, epochs = 2, batch_size = batch_size,verbose = 2)
+model.fit(train_images, train_labels, epochs = 5, batch_size = batch_size,verbose = 2)
 #epochs is how many time you see an image 
 #The images are randomly feed to the neural network because the way the images are fed to the 
 #model tweaks the weights.
