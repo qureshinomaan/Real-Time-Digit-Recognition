@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras 
+from keras.regularizers import l2
 from keras import optimizers
 import numpy as np
 import matplotlib.pyplot as plt 
@@ -38,10 +39,10 @@ train_images = train_images/255.0
 #====================================================================================#
 model = keras.Sequential([
 	keras.layers.Flatten(input_shape = (28,28)),
-	keras.layers.Dense(512, activation = "relu" ),
-	keras.layers.Dense(512, activation = "relu" ),
-	keras.layers.Dense(256, activation = "relu" ),
-	keras.layers.Dense(128, activation = "relu" ),
+	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.001)),
+	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.001)),
+	keras.layers.Dense(256, activation = "relu", kernel_regularizer=l2(0.001)),
+	keras.layers.Dense(128, activation = "relu", kernel_regularizer=l2(0.001) ),
 	keras.layers.Dense(10, activation = "softmax" )
 	])
 # Insert Hyperparameters
