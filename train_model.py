@@ -39,10 +39,10 @@ train_images = train_images/255.0
 #====================================================================================#
 model = keras.Sequential([
 	keras.layers.Flatten(input_shape = (28,28)),
-	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.001)),
-	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.001)),
-	keras.layers.Dense(256, activation = "relu", kernel_regularizer=l2(0.001)),
-	keras.layers.Dense(128, activation = "relu", kernel_regularizer=l2(0.001) ),
+	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.01)),
+	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.01)),
+	keras.layers.Dense(256, activation = "relu", kernel_regularizer=l2(0.02)),
+	keras.layers.Dense(128, activation = "relu", kernel_regularizer=l2(0.02) ),
 	keras.layers.Dense(10, activation = "softmax" )
 	])
 # Insert Hyperparameters
