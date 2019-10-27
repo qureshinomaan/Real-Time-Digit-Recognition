@@ -90,6 +90,8 @@ class Net(nn.Module):
 
 
 net = Net()
+
+
 #=========================================================#
 
 #=========================================================#
@@ -102,20 +104,20 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum = 0.9)
 #=========================================================#
 # Training the model. 
 #=========================================================#
-for epoch in range(2):
-  running_loss = 0.0
-  for i, data in enumerate(trainloader):
-    inputs, label = data
-    optimizer.zero_grad()
-    outputs = net(inputs)
-    loss = criterion(outputs, label)
-    loss.backward()
-    optimizer.step()
-    running_loss += loss.item()
-    if i % 2000 == 1999:    # print every 2000 mini-batches
-        print('[%d, %5d] loss: %.3f' %
-        (epoch + 1, i + 1, running_loss / 2000))
-        running_loss = 0.0
+# for epoch in range(2):
+#   running_loss = 0.0
+#   for i, data in enumerate(trainloader):
+#     inputs, label = data
+#     optimizer.zero_grad()
+#     outputs = net(inputs)
+#     loss = criterion(outputs, label)
+#     loss.backward()
+#     optimizer.step()
+#     running_loss += loss.item()
+#     if i % 2000 == 1999:    # print every 2000 mini-batches
+#         print('[%d, %5d] loss: %.3f' %
+#         (epoch + 1, i + 1, running_loss / 2000))
+#         running_loss = 0.0
 #=========================================================#
 
 
@@ -123,8 +125,7 @@ for epoch in range(2):
 #=========================================================#
 # Saving the Pytorch Model.
 #=========================================================#
-PATH = './model.pth'
-torch.save(net.state_dict(), PATH)
+torch.save({'arch' : 'vgg16', 'state_dict' : net.state_dict},'classifier.pth')
 #=========================================================#
 
 

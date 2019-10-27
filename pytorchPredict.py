@@ -14,6 +14,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
+from torchvision import models
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
     getattr(ssl, '_create_unverified_context', None)): 
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -51,8 +52,13 @@ train_images = train_images/255.0
 #====================================================================================#
 # Loading the trained model. #
 #====================================================================================#
-model = Net()
-model = torch.load("./model.pth")
+
+chpt = torch.load("./classifier.pth")
+model = models.vgg19(pretrained=True)
+for param in model.parameters():
+	param.requires_grad = False
+model.classifier = Net()
+model.load_state_dict(chpt['state_dict'])
 for key in model:
 	print(key)
 #====================================================================================#
@@ -73,7 +79,7 @@ def rands():
 #====================================================================================#
 #This function is for preprocessing the image we get.
 #====================================================================================#
-def preproc(image_data) :
+def preproc(image_data) : 
 	res = cv2.cvtColor(image_data, cv2.COLOR_BGR2GRAY)
 	res = resize(res,(28,28), anti_aliasing=True)
 	res = np.rot90(np.fliplr(res))
@@ -93,7 +99,7 @@ while True :
 	image = get_img()
 	image_data = image.get()
 	res,pes = preproc(image_data)
-	prediction = model(pes)
+	prediction = model.forward(pes)
 	plt.grid(False)
 	plt.imshow(res,cmap = plt.cm.binary)
 	print(prediction)
