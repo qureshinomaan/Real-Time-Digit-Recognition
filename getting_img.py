@@ -4,9 +4,9 @@ class get_img(object):
 	
 	pygame.init()
 	def __init__(self):
-		self.winx, self.winy = 100, 100
+		self.winx, self.winy = 150, 150
 		#The drawing cursor width 
-		self.cursor_width = 7
+		self.cursor_width = 10
 		self.win = pygame.display.set_mode((self.winx,self.winy))
 	def get(self):
 		run = True
