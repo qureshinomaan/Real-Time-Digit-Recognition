@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow import keras 
 from keras.regularizers import l2
 from keras import optimizers
+from keras import backend as K
 import numpy as np
 import matplotlib.pyplot as plt 
 import os, ssl
@@ -16,19 +17,35 @@ data = keras.datasets.mnist
 (train_images, train_labels), (test_images, test_labels) = data.load_data()
 #====================================================================================#
 
+#====================================================================================#
+# Making the data for conv2d layer. 
+#====================================================================================#
+if K.image_data_format() == 'channels_first':
+    train_images = train_images.reshape(train_images.shape[0], 1, 28, 28)
+    test_images = test_images.reshape(test_images.shape[0], 1, 28, 28)
+    input_shape = (1, 28, 28)
+else:
+    train_images = train_images.reshape(train_images.shape[0], 28, 28, 1)
+    test_images = test_images.reshape(test_images.shape[0], 28, 28, 1)
+    input_shape = (28, 28, 1)
+#====================================================================================#
+
+
 
 #====================================================================================#
-#Plotting a random image 
+#Plotting a ranpdom image 
 #====================================================================================#
-#plt.imshow(train_images[90],cmap = plt.cm.binary )
-#plt.show()
+# plt.imshow(train_images[90],cmap = plt.cm.binary )
+# plt.show()
+# print(train_images[0]/255.0)
 #====================================================================================#
 
 #====================================================================================#
 #Normalising the data 
 #====================================================================================#
-	#The data that keras loaded is in form of a numpy array
+#The data that keras loaded is in form of a numpy array
 test_images = test_images/255.0
+print(train_images.shape)
 train_images = train_images/255.0
 #====================================================================================#
 
@@ -38,19 +55,22 @@ train_images = train_images/255.0
 	#Sequential Model is like the horizontal stacked layer
 #====================================================================================#
 model = keras.Sequential([
-	keras.layers.Flatten(input_shape = (28,28)),
-	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.001)),
-	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.001)),
-	keras.layers.Dense(256, activation = "relu", kernel_regularizer=l2(0.002)),
-	keras.layers.Dense(128, activation = "relu", kernel_regularizer=l2(0.002) ),
+	keras.layers.Conv2D(10, 5, activation="relu", input_shape = (28,28,1)),
+	keras.layers.Conv2D(10, 3, activation="relu"),
+	keras.layers.Conv2D(10, 3, activation="relu"),
+	keras.layers.Conv2D(10, 3, activation="relu"),
+	keras.layers.Conv2D(10, 3, activation="relu"),
+	keras.layers.Flatten(),
+	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.05)),
+	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.05)),
 	keras.layers.Dense(10, activation = "softmax" )
 	])
 # Insert Hyperparameters
 learning_rate = 0.01
-training_epochs = 20
-batch_size = 100
+training_epochs = 5
+batch_size = 1000
 sgd = optimizers.SGD(lr=learning_rate)
-
+adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, amsgrad=False)
 model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
 
 #====================================================================================#
@@ -60,7 +80,7 @@ model.compile(optimizer = "adam", loss = "sparse_categorical_crossentropy", metr
 #====================================================================================#
 #Training the model 
 #====================================================================================#
-model.fit(train_images, train_labels, epochs = 5, batch_size = batch_size,verbose = 2)
+model.fit(train_images, train_labels, epochs = 5, batch_size = batch_size)
 #epochs is how many time you see an image 
 #The images are randomly feed to the neural network because the way the images are fed to the 
 #model tweaks the weights.

@@ -54,6 +54,7 @@ def preproc(image_data) :
 	res[res < 20] = 0
 	#print(res)
 	res = res/255
+	print(res)
 	return res,res[np.newaxis,:,:]
 #====================================================================================#
 
@@ -69,6 +70,7 @@ while True :
 	plt.grid(False)
 	plt.imshow(res,cmap = plt.cm.binary)
 	print(prediction)
+	print(np.sum(prediction))
 	plt.title("Prediction : " + str(np.argmax(prediction)))
 	plt.show()
 #====================================================================================#

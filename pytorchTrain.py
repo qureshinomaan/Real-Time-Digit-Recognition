@@ -85,7 +85,7 @@ class Net(nn.Module):
         x = x.view(-1, 16 * 20 * 20)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        x = self.fc3(x)
+        x = F.relu(self.fc3(x))
         return x
 
 
@@ -104,7 +104,7 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum = 0.9)
 #=========================================================#
 # Training the model. 
 #=========================================================#
-# for epoch in range(2):
+# for epoch in range(1):
 #   running_loss = 0.0
 #   for i, data in enumerate(trainloader):
 #     inputs, label = data
@@ -120,7 +120,14 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum = 0.9)
 #         running_loss = 0.0
 #=========================================================#
 
-
+for i, data in enumerate(testloader):
+  inputs, label = data 
+  outputs = net(inputs)
+  print("outputs : ", outputs)
+  print("Lables : ", label)
+  value, indices = torch.max(outputs[0], 0)
+  print(indices)
+  input()
 
 #=========================================================#
 # Saving the Pytorch Model.
