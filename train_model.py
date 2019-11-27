@@ -61,13 +61,16 @@ model = keras.Sequential([
 	keras.layers.Conv2D(10, 3, activation="relu"),
 	keras.layers.Conv2D(10, 3, activation="relu"),
 	keras.layers.Flatten(),
-	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.05)),
-	keras.layers.Dense(512, activation = "relu", kernel_regularizer=l2(0.05)),
+	keras.layers.Dense(512, activation = "relu"),
+	keras.layers.Dropout(0.5),
+	keras.layers.Dense(128, activation = "relu"),
+	keras.layers.Dropout(0.5),
+	keras.layers.Dense(64, activation = "relu"),
 	keras.layers.Dense(10, activation = "softmax" )
 	])
 # Insert Hyperparameters
 learning_rate = 0.01
-training_epochs = 5
+training_epochs = 3
 batch_size = 1000
 sgd = optimizers.SGD(lr=learning_rate)
 adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, amsgrad=False)
