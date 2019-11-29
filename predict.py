@@ -5,6 +5,7 @@ from getting_img import get_img
 from tensorflow import keras 
 from skimage import color
 from skimage.transform import resize
+from keras import backend as K
 import numpy as np
 import matplotlib.pyplot as plt 
 import os, ssl
@@ -48,14 +49,17 @@ def rands():
 def preproc(image_data) :
 	res = cv2.cvtColor(image_data, cv2.COLOR_BGR2GRAY)
 	res = resize(res,(28,28), anti_aliasing=True)
+	# print(res.shape)
 	res = np.rot90(np.fliplr(res))
 	res = (res)*250
 	res = np.around(res)
+	# print(res.shape)
+	res = res.reshape(1, 28, 28, 1)
 	res[res < 20] = 0
 	#print(res)
 	res = res/255
-	print(res)
-	return res,res[np.newaxis,:,:]
+	# print(res)
+	return res,res
 #====================================================================================#
 
 #====================================================================================#
@@ -66,11 +70,13 @@ while True :
 	image = get_img()
 	image_data = image.get()
 	res,pes = preproc(image_data)
-	prediction = model.predict(pes)
+	# print(pes.shape)
+	prediction = model.predict(res)
 	plt.grid(False)
+	res = res.reshape(28, 28)
 	plt.imshow(res,cmap = plt.cm.binary)
 	print(prediction)
-	print(np.sum(prediction))
+	# print(np.sum(prediction))
 	plt.title("Prediction : " + str(np.argmax(prediction)))
 	plt.show()
 #====================================================================================#

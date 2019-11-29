@@ -1,4 +1,6 @@
 import pygame
+import random 
+
 
 class get_img(object):
 	
@@ -6,7 +8,8 @@ class get_img(object):
 	def __init__(self):
 		self.winx, self.winy = 150, 150
 		#The drawing cursor width 
-		self.cursor_width = 10
+		self.cursor_width = random.randint(8, 13)
+		print(self.cursor_width)
 		self.win = pygame.display.set_mode((self.winx,self.winy))
 	def get(self):
 		run = True
