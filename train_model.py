@@ -6,6 +6,7 @@ from keras import backend as K
 import numpy as np
 import matplotlib.pyplot as plt 
 import os, ssl
+from augmentation import get_rotated, get_shifted
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
     getattr(ssl, '_create_unverified_context', None)): 
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -15,6 +16,16 @@ if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
 #====================================================================================#
 data = keras.datasets.mnist
 (train_images, train_labels), (test_images, test_labels) = data.load_data()
+x_rotated, y_rotated = get_rotated()
+x_shifted, y_shifted = get_shifted()
+print(train_images.shape, train_labels.shape)
+print(x_rotated.shape, y_rotated.shape)
+train_images = np.concatenate((train_images, x_rotated), axis =0)
+train_labels = np.concatenate((train_labels, y_rotated), axis=0)
+train_images = np.concatenate((train_images, x_shifted), axis =0)
+train_labels = np.concatenate((train_labels, y_shifted), axis=0)
+print(train_images.shape, train_labels.shape)
+
 #====================================================================================#
 
 #====================================================================================#
